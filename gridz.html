@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            grid-template-rows: 1fr 10fr 1fr;
+            grid-template-areas: "header header"
+                                 "menu content"
+                                 "footer footer";
+        }
+        header {
+            grid-area: header;
+            background-color: beige;
+        }
+        nav {
+            grid-area: menu;
+            background-color: bisque;
+        }
+        div.content {
+            grid-area: content;
+            background-color: blanchedalmond;
+        }
+        footer {
+            grid-area: footer;
+            background-color: beige;
+        }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Tittel</h1>
+        </header>
+        <nav>
+            <ul>
+                <li>AAAAA</li>
+                <li>BBB-B</li>
+            </ul>
+        </nav>
+        <div class="content">
+            <h2>Bello</h2>
+        </div>
+        <footer>
+            Fot
+        </footer>
+    </body>
+</html>
