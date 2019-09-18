@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jabascrift</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h1 ondragstart="drag()" ondragend="dragged()">Click me</h1>
+    <p id="peepee"></p>
+    <h1 onclick="drag()">Hellalal</h1>
+</body>
+<script>
+    function drag() {
+        document.getElementById("peepee").innerHTML = "Dragger";
+    }
+    function dragged() {
+        document.getElementById("peepee").innerHTML = "";
+    }
+</script>
+
+</html>
