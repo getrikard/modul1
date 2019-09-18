@@ -12,18 +12,18 @@
 
 <body onload="oo()">
     <img src="https://www.w3schools.com/images/colorpicker.gif">
-    
+
     <ul id="list"></ul>
+
+    <script>
+        document.getElementById('list').innerHTML += '<li>firstscript ' + new Date().toTimeString() + '</li>';
+
+        function oo() {
+            document.getElementById('list').innerHTML += '<li>bodyload ' + new Date().toTimeString() + '</li>';
+        }
+
+        document.getElementById('list').innerHTML += '<li>afterscript ' + new Date().toTimeString() + '</li>';
+    </script>
 </body>
-
-<script>
-    document.getElementById('list').innerHTML += '<li>firstscript ' + new Date().toTimeString() + '</li>';
-
-    function oo() {
-        document.getElementById('list').innerHTML += '<li>bodyload ' + new Date().toTimeString() + '</li>';
-    }
-
-    document.getElementById('list').innerHTML += '<li>afterscript ' + new Date().toTimeString() + '</li>';
-</script>
 
 </html>

@@ -990,23 +990,24 @@
     </table>
 
     <ul id="info"></ul>
+
+    <script>
+        function drag() {
+            document.getElementById("peepee").innerHTML = "Dragger";
+        }
+        function dragged() {
+            document.getElementById("peepee").innerHTML = "";
+        }
+        function testFunk(text) {
+            document.getElementById('info').innerHTML += '<li>' + text + '</li>';
+        }
+        function doSomething(etNavnDuVelgerSelv) {
+            etNavnDuVelgerSelv.innerHTML = 'CCCCCCCCCCCCCCCC';
+        }
+        function OX(element, ox) {
+            element.innerHTML = ox;
+        }
+    </script>
 </body>
-<script>
-    function drag() {
-        document.getElementById("peepee").innerHTML = "Dragger";
-    }
-    function dragged() {
-        document.getElementById("peepee").innerHTML = "";
-    }
-    function testFunk(text) {
-        document.getElementById('info').innerHTML += '<li>' + text + '</li>';
-    }
-    function doSomething(etNavnDuVelgerSelv) {
-        etNavnDuVelgerSelv.innerHTML = 'CCCCCCCCCCCCCCCC';
-    }
-    function OX(element, ox) {
-        element.innerHTML = ox;
-    }
-</script>
 
 </html>
