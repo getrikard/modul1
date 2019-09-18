@@ -9,26 +9,37 @@
 
 <body>
     <p>Ferdighet 7 - Sette variabel til resultat av et regnestykke. </p>
-    <input id="tallA" type="range" min="1" max="100" step="1" oninput="calculate()" value="2" />
-    <input id="tallB" type="range" min="1" max="100" step="1" oninput="calculate()" value="2" />
+    <input id="tallA" type="range" min="1" max="1000" step="10" oninput="calculate()" value="2" />
+    <input id="tallB" type="range" min="1" max="1000" step="10" oninput="calculate()" value="2" />
     <div id="resultat"></div>
+    <div id="divdiv"></div>
     <script>
         var resultatDiv = document.getElementById('resultat');
+        var divdiv = document.getElementById('divdiv');
         var tallAInput = document.getElementById('tallA');
         var tallBInput = document.getElementById('tallB');
+
         calculate();
+
         function calculate() {
-            var tallA = parseInt(tallAInput.value);
-            var tallB = parseInt(tallBInput.value);
+            // var tallA = parseInt(tallAInput.value);
+            // var tallB = parseInt(tallBInput.value);
+
+            var tallA = Math.random() * 1600;
+            var tallB = Math.random() * 800;
+
             var sum = tallA + tallB;
             var differense = tallA - tallB;
             var produkt = tallA * tallB;
             var kvotient = tallA / tallB;
+
             resultatDiv.innerHTML = '' +
                 tallA + '+' + tallB + '=' + sum + '<br/>' +
                 tallA + '-' + tallB + '=' + differense + '<br/>' +
                 tallA + '*' + tallB + '=' + produkt + '<br/>' +
                 tallA + '/' + tallB + '=' + kvotient;
+
+            divdiv.innerHTML = '<div style="background-color:green;width:' + tallA + 'px; height:' + tallB + 'px;border:' + Math.random() * 50 + 'px solid blue;border-radius:' + Math.random() * 400 + 'px;"></div>'
         }
     </script>
 </body>
