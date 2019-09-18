@@ -11,7 +11,7 @@
     <p>Ferdighet 6 - Sette sammen tekst av flere deler og bruke dette til å bygge HTML dynamisk</p>
 
     <input id="sizeSlider" type="range" min="100" max="500" step="10" oninput="showDiv()" />
-    <input id="borderSlider" type="range" min="100" max="500" step="10" oninput="showDiv()" />
+    <input id="borderSlider" type="range" min="0" max="250" step="1" value="0" oninput="showDiv()" />
     <br />
     <input id="textInput" type="text" oninput="showDiv()" value="endre teksten!" />
     <select id="colorChooser" onchange="showDiv()">
@@ -21,9 +21,9 @@
     </select>
     <input type="checkbox">
     <select id="borderChooser" onchange="showDiv()">
-        <option selected value="none">No border</option>
-        <option value="black">Black border</option>
-        <option value="grey">Grey border</option>
+        <option selected value="unset">No border</option>
+        <option value="#000000">Black border</option>
+        <option value="#aaaaaa">Grey border</option>
     </select>
     <div id="resultat"></div>
     <div id="resultatHtml" style="font-family: monospace"></div>
@@ -31,8 +31,10 @@
         var resultatDiv = document.getElementById('resultat');
         var resultatHtmlDiv = document.getElementById('resultatHtml');
         var sizeSlider = document.getElementById('sizeSlider');
+        var borderSlider = document.getElementById('borderSlider');
         var textInput = document.getElementById('textInput');
         var colorChooser = document.getElementById('colorChooser');
+        var borderChooser = document.getElementById('borderChooser');
 
         showDiv();
 
@@ -41,6 +43,8 @@
                 + 'background-color: ' + colorChooser.value + ';'
                 + 'width: ' + sizeSlider.value + 'px;'
                 + 'height: ' + sizeSlider.value + 'px;'
+                + 'border: 0.5vw solid ' + borderChooser.value + ';'
+                + 'border-radius: ' + borderSlider.value + 'px;'
                 + '">' +
                 textInput.value + '</div>';
             resultatHtmlDiv.innerText = resultatDiv.innerHTML;
