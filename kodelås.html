@@ -82,6 +82,7 @@
         function clicked(button) {
             if (enteredSoFar.length >= 4) {
                 enteredSoFar = '';
+                light.style.backgroundColor = "red";
             }
             enteredSoFar += button.innerHTML;
             console.log("Clicked: " + enteredSoFar);
@@ -98,6 +99,8 @@
 
         function reset() {
             enteredSoFar = '';
+            light.style.backgroundColor = "red";
+            updateText();
         }
 
         function updateText() {
