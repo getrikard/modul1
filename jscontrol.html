@@ -22,16 +22,30 @@
 </head>
 
 <body>
-    <div id="bla">Bla bla bla</div>
-    <label><input type="checkbox" onchange="toggleStyle(this, 'bg')" />.yellow-bg</label><br>
-    <label><input type="checkbox" onchange="toggleStyle(this, 'border')" />.border</label><br>
-    <label><input type="checkbox" onchange="toggleStyle(this, 'pad')" />.pad</label><br>
-    <label><input type="checkbox" onchange="toggleStyle(this, 'radi')" />.ŗadi</label><br>
+    <div id="bla1" onclick="updateSelected(this)">Bla</div>
+    <div id="bla2" onclick="updateSelected(this)">Bla bla</div>
+    <div id="bla3" onclick="updateSelected(this)">Bla bla bla</div>
+    <div id="bla4" onclick="updateSelected(this)">Bla bla bla bla</div>
+
+    <label><input id="check-bg" type="checkbox" onchange="toggleStyle(this, 'bg')" />.yellow-bg</label><br>
+    <label><input id="check-border" type="checkbox" onchange="toggleStyle(this, 'border')" />.border</label><br>
+    <label><input id="check-pad" type="checkbox" onchange="toggleStyle(this, 'pad')" />.pad</label><br>
+    <label><input id="check-radi" type="checkbox" onchange="toggleStyle(this, 'radi')" />.ŗadi</label><br>
 
     <script>
+        var selected = document.getElementById('bla1');
+
         function toggleStyle(checkbox, toggleClass) {
             var isChecked = checkbox.checked;
-            document.getElementById('bla').classList.toggle(toggleClass, isChecked);
+            selected.classList.toggle(toggleClass, isChecked);
+        }
+
+        function updateSelected(selectedDiv) {
+            selected = selectedDiv;
+            document.getElementById('check-bg').checked = selectedDiv.classList.contains('bg');
+            document.getElementById('check-border').checked = selectedDiv.classList.contains('border');
+            document.getElementById('check-pad').checked = selectedDiv.classList.contains('pad');
+            document.getElementById('check-radi').checked = selectedDiv.classList.contains('radi');
         }
     </script>
 </body>
