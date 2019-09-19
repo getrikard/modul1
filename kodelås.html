@@ -2,29 +2,108 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Kodelås</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        div.kodelaas-container {
+            display: inline-block;
+            background-color: gray;
+            padding: 10px;
+            border: 3px solid black;
+        }
 
+        div.kodelaas-container div {
+            text-align: center;
+            vertical-align: middle;
+            background-color: brown;
+            color: white;
+            padding: 20px;
+            width: 40px;
+            height: 40px;
+            margin: 4px;
+            display: inline-block;
+            font-size: 2em;
+            border: 2px solid black;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        div.kodelaas-container div:active {
+            background-color: darkred;
+        }
+
+        div.kodelaas-container div#screen {
+            background-color: blanchedalmond;
+            width: 330px;
+            text-align: right;
+            font-family: monospace;
+            cursor: auto;
+            user-select: auto;
+            color: black;
+            font-size: 3em;
+        }
+
+        div.kodelaas-container div#light {
+            background-color: red;
+            cursor: auto;
+        }
     </style>
 </head>
 
 <body>
-    <div>
-        <div id="1">1</div>
-        <div id="2">1</div>
-        <div id="3">1</div>
-        <div id="4">1</div>
-        <div id="5">1</div>
-        <div id="6">1</div>
-        <div id="7">1</div>
-        <div id="8">1</div>
-        <div id="9">1</div>
-        <div id="star">1</div>
-        <div id="0">1</div>
-        <div id="square">1</div>
+    <h1>Kodelås</h1>
+    <div class="kodelaas-container">
+        <div id="screen"></div><br>
+        <div onclick="clicked(this)">1</div>
+        <div onclick="clicked(this)">2</div>
+        <div onclick="clicked(this)">3</div>
+        <div onclick="reset()">R</div><br>
+        <div onclick="clicked(this)">4</div>
+        <div onclick="clicked(this)">5</div>
+        <div onclick="clicked(this)">6</div>
+        <div id="light"></div><br>
+        <div onclick="clicked(this)">7</div>
+        <div onclick="clicked(this)">8</div>
+        <div onclick="clicked(this)">9</div><br>
+        <div onclick="clicked(this)">*</div>
+        <div onclick="clicked(this)">0</div>
+        <div onclick="clicked(this)">#</div>
     </div>
+
+    <script>
+        var correctCode = '8521';
+        var enteredSoFar = '';
+        var screen = document.getElementById("screen");
+        var light = document.getElementById("light");
+        
+        updateText();
+
+        function clicked(button) {
+            if (enteredSoFar.length >= 4) {
+                enteredSoFar = '';
+            }
+            enteredSoFar += button.innerHTML;
+            console.log("Clicked: " + enteredSoFar);
+
+            if (enteredSoFar.startsWith(correctCode)) {
+                console.log("Correct");
+                light.style.backgroundColor = "green";
+            } else if (enteredSoFar.length >= 4) {
+                console.log("Wrong");
+                light.style.backgroundColor = "red";
+            }
+            updateText();
+        }
+
+        function reset() {
+            enteredSoFar = '';
+        }
+
+        function updateText() {
+            screen.innerHTML = enteredSoFar;
+        }
+    </script>
 </body>
 
 </html>
