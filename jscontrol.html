@@ -6,14 +6,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-
+        .bg {
+            background-color: yellow;
+        }
+        .border {
+            border: 2px solid greenyellow;
+        }
+        .pad {
+            padding: 10px;
+        }
+        .radi {
+            border-radius: 10px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="bla">Bla bla bla</div>
+    <label><input type="checkbox" onchange="toggleStyle(this, 'bg')" />.yellow-bg</label><br>
+    <label><input type="checkbox" onchange="toggleStyle(this, 'border')" />.border</label><br>
+    <label><input type="checkbox" onchange="toggleStyle(this, 'pad')" />.pad</label><br>
+    <label><input type="checkbox" onchange="toggleStyle(this, 'radi')" />.ŗadi</label><br>
 
     <script>
-
+        function toggleStyle(checkbox, toggleClass) {
+            var isChecked = checkbox.checked;
+            document.getElementById('bla').classList.toggle(toggleClass, isChecked);
+        }
     </script>
 </body>
 
