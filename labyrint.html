@@ -45,31 +45,60 @@
 
 <body>
     <script>
-        var size = 15;
+        var size = 10;
 
         makeRandomLab();
 
         function makeRandomLab() {
             document.write('<table>');
-            for (var i = 0; i < size; i++) {
-                document.write('<tr>');
-                for (var j = 0; j < size; j++) {
-                    document.write('<td class="wall small"></td><td class="wall wide"></td>');
-                }
-                document.write('<td class="wall small"></td></tr><tr>');
 
-                for (var k = 0; k < size; k++) {
-                    document.write('<td class="wall high"></td><td class="room"></td>');
+            // Øvre yttervegg.
+            for (var j = 0; j < size; j++) {
+                document.write('<td class="wall small"></td>');
+                document.write('<td class="wall wide"></td>');
+            }
+            document.write('<td class="wall small"></td></tr>');
+
+            // Resten av radene.
+            for (var i = 0; i < size; i++) {
+                // Venstre yttervegg.
+                document.write('<tr>');
+                document.write('<td class="wall high"></td>');
+                document.write('<td class="room"></td>');
+
+                // Resten av romma.
+                for (var j = 0; j < size - 1; j++) {
+                    document.write('<td class="' + (Math.random() < 0.5 ? 'wall' : 'noWall') + ' high" onclick="toggleWall(this)"></td>');
+                    document.write('<td class="room"></td>');
                 }
-                document.write('<td class="wall high"></td></tr>');
+                // Høyre yttervegg.
+                document.write('<td class="wall high"></td>');
+                document.write('</tr>');
+
+                if (i < size - 1) {
+                    // Horisontale vegger.
+                    document.write('<tr>');
+                    for (var j = 0; j < size; j++) {
+                        document.write('<td class="wall small"></td>');
+                        document.write('<td class="' + (Math.random() < 0.5 ? 'wall' : 'noWall') + ' wide" onclick="toggleWall(this)"></td>');
+                    }
+                    document.write('<td class="wall small"></td>');
+                    document.write('</tr>');
+                }
             }
 
+            // Nedre yttervegg.
             document.write('<tr>');
             for (var m = 0; m < size; m++) {
                 document.write('<td class="wall small"></td><td class="wall wide"></td>');
             }
             document.write('<td class="wall small"></td></tr><tr>');
             document.write('</table>');
+        }
+
+        function toggleWall(wall) {
+            wall.classList.toggle('wall');
+            wall.classList.toggle('noWall');
         }
     </script>
 </body>
