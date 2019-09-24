@@ -11,6 +11,8 @@
             color: white;
             padding: 10px;
             cursor: pointer;
+            border: 0;
+            border-radius: 5px;
         }
 
         option {
@@ -26,7 +28,7 @@
 </head>
 
 <body>
-    <select>
+    <select onchange="console.log(this.value)">
         <option>Arabia</option>
         <option>Beograd</option>
         <option>Constantinopel</option>

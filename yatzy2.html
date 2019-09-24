@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Yatzy!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        button {
+            padding: 7px;
+            font-size: 1.1em;
+            font-family: monospace;
+            width: 300px;
+        }
+
+        table#results,
+        table#results th,
+        table#results td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+
+        div.dice {
+            font-size: 4em;
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Maxi-Yatzy</h1>
+
+    <div id="game">
+        <button onclick="throwDice()">Kast terningene</button>
+        <div id="dice-display" class="dice"></div>
+
+        <h2>Kastede terninger:</h2>
+        <div>
+            <div id="thrownDice0" class="dice" onclick="saveDice(this)"></div>
+            <div id="thrownDice1" class="dice" onclick="saveDice(this)"></div>
+            <div id="thrownDice2" class="dice" onclick="saveDice(this)"></div>
+            <div id="thrownDice3" class="dice" onclick="saveDice(this)"></div>
+            <div id="thrownDice4" class="dice" onclick="saveDice(this)"></div>
+            <div id="thrownDice5" class="dice" onclick="saveDice(this)"></div>
+        </div>
+
+        <h2>Sparte terninger:</h2>
+        <div>
+            <div id="savedDice0" class="dice" onclick="unSaveDice(this)"></div>
+            <div id="savedDice1" class="dice" onclick="unSaveDice(this)"></div>
+            <div id="savedDice2" class="dice" onclick="unSaveDice(this)"></div>
+            <div id="savedDice3" class="dice" onclick="unSaveDice(this)"></div>
+            <div id="savedDice4" class="dice" onclick="unSaveDice(this)"></div>
+            <div id="savedDice5" class="dice" onclick="unSaveDice(this)"></div>
+        </div>
+
+    </div>
+
+    <script>
+        var diceUnicode = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        var thrownDice = [];
+        var savedDice = [];
+
+        function throwDice() {
+            let dice = [0, 0, 0, 0, 0, 0];
+            thrownDice = [];
+            for (let i = 0; i < dice.length; i++) {
+                dice[i] = Math.floor(Math.random() * 6 + 1);
+                thrownDice.push(diceUnicode[dice[i] - 1]);
+            }
+            showDice();
+        }
+
+        function showDice() {
+            for (let i = 0; i < 6; i++) {
+                if (thrownDice[i] === undefined) {
+                    document.getElementById('thrownDice' + i).innerHTML = '';
+                } else {
+                    document.getElementById('thrownDice' + i).innerHTML = thrownDice[i];
+                }
+                if (savedDice[i] === undefined) {
+                    document.getElementById('savedDice' + i).innerHTML = '';
+                } else {
+                    document.getElementById('savedDice' + i).innerHTML = savedDice[i];
+                }
+            }
+        }
+
+        function saveDice(dieDiv) {
+            let index = dieDiv.id[dieDiv.id.length - 1];
+            let die = dieDiv.innerHTML;
+
+            thrownDice[index] = undefined;
+            savedDice.push(die);
+            showDice();
+        }
+    </script>
+</body>
+
+</html>
