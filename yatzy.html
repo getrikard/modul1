@@ -10,21 +10,47 @@
             padding: 7px;
             font-size: 1.1em;
             font-family: monospace;
+            width: 300px;
         }
 
         #dice-display {
-            font-size: 5em;
+            font-size: 4em;
+        }
+
+        table#results, table#results th, table#results td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
         }
     </style>
 </head>
 
 <body>
-    <input type="text" oninput="showDice(this)">
-    <div id="dice-display"></div>
+    <h1>Yatzy</h1>
+
+    <div id="game">
+        <input type="text" oninput="showDice(this)">
+        <div id="dice-display"></div>
+    </div>
+
+    <div>
+        <table id="results">
+            <tr>
+                <th></th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+            </tr>
+        </table>
+    </div>
+
 
     <script>
         var dice = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
         var diceDisplayTag = document.getElementById('dice-display');
+
+        document.getElementById("results").innerHTML += "<tr><td></td><td></td></tr>";
 
         function showDice(inputTag) {
             let numberArray = inputTag.value;
