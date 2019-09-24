@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Yatzy!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        input {
+            padding: 7px;
+            font-size: 1.1em;
+            font-family: monospace;
+        }
+
+        #dice-display {
+            font-size: 5em;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" oninput="showDice(this)">
+    <div id="dice-display"></div>
+
+    <script>
+        var dice = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        var diceDisplayTag = document.getElementById('dice-display');
+
+        function showDice(inputTag) {
+            let numberArray = inputTag.value;
+            let diceDisplay = '';
+            for (let i = 0; i < numberArray.length; i++) {
+                let diceIndex = parseInt(numberArray[i]) - 1;
+                diceDisplay += dice[diceIndex];
+            }
+
+            diceDisplayTag.innerHTML = diceDisplay;
+        }
+    </script>
+</body>
+
+</html>
