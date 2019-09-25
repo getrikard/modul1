@@ -60,6 +60,7 @@
     </div>
 
     <script>
+        var numberOfDice = 6;
         var diceUnicode = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
         var thrownDice = [];
         var savedDice = [];
@@ -67,7 +68,7 @@
         function throwDice() {
             let dice = [0, 0, 0, 0, 0, 0];
             thrownDice = [];
-            for (let i = 0; i < dice.length; i++) {
+            for (let i = 0; i < numberOfDice; i++) {
                 dice[i] = Math.floor(Math.random() * 6 + 1);
                 thrownDice.push(diceUnicode[dice[i] - 1]);
             }
@@ -75,7 +76,7 @@
         }
 
         function showDice() {
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < numberOfDice; i++) {
                 if (thrownDice[i] === undefined) {
                     document.getElementById('thrownDice' + i).innerHTML = '';
                 } else {
@@ -94,7 +95,20 @@
             let die = dieDiv.innerHTML;
 
             thrownDice[index] = undefined;
+            if (savedDice.length >= numberOfDice) {
+                savedDice.shift();
+            }
             savedDice.push(die);
+            showDice();
+        }
+
+        function unSaveDice(dieDiv) {
+            let index = dieDiv.id[dieDiv.id.length - 1];
+            let die = dieDiv.innerHTML;
+
+            savedDice[index] = undefined;
+            thrownDice.shift();
+            thrownDice.push(die);
             showDice();
         }
     </script>
