@@ -24,17 +24,82 @@
         option:hover {
             background-color: chocolate;
         }
+
+        div#rallyDiv {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <select onchange="console.log(this.value)">
+    <select id="placeSelect" onchange="choosePlace(this)">
+        <option>Velg sted</option>
         <option>Arabia</option>
         <option>Beograd</option>
         <option>Constantinopel</option>
     </select>
 
-    
+    <label><input type="radio" name="typetog" value="korstog" onchange="chooseTrain(this)">Korstog</label>
+    <label><input type="radio" name="typetog" value="felttog" onchange="chooseTrain(this)">Felttog</label>
+
+
+    <div id="rallyDiv">
+        <p onclick="customRallyInput(this)" id="rallyP"></p>
+    </div>
+
+
+
+    <script>
+        var train = '';
+        var place = '';
+        var rally = 'Velg sted og togtype.';
+        var customRally = false;
+        rallyDiv = document.getElementById('rallyDiv');
+
+        show();
+
+        function choosePlace(element) {
+            place = element.value;
+            show();
+        }
+
+        function chooseTrain(element) {
+            train = element.value;
+            show();
+        }
+
+        function calcRally() {
+            if (train == "korstog") rally = "Deus Vult";
+            else rally = "For fedreland";
+        }
+
+        function show() {
+            if (place != '' && train != '') {
+                if (!customRally) {
+                    calcRally();
+                    rally = `Et ${train} til ${place}. ${rally}!`;
+                }
+            }
+            rallyDiv.innerHTML = `<p onclick="customRallyInput(this)" id="rallyDiv">${rally}</p>`;
+        }
+
+        function customRallyInput() {
+            rallyDiv.innerHTML = 
+                    `<input type="text" value="${rally}" onkeydown="if (event.code === \'Enter\') submitCustomRally(this);" autofocus="autofocus">
+                    <button onclick="show()">Angre</button>`;
+        }
+
+        function submitCustomRally(rallyInput) {
+            rally = rallyInput.value;
+            customRally = true;
+            show();
+        }
+
+        function undoCustomRally() {
+            
+        }
+    </script>
 </body>
 
 </html>
