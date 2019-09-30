@@ -86,6 +86,8 @@
             { description: 'Spise middag', person: 'Gregor', deadline: new Date("2019-09-30"), isDone: false },
         ];
 
+        tasks.sort(function (task) { return task.description });
+
         // Controller
         var taskDescriptionInput = document.getElementById('taskDescription');
         var taskPersonInput = document.getElementById('taskPerson');
