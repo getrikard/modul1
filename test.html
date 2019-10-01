@@ -6,6 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        div {
+            margin: 10px auto;
+            border: 1px solid grey;
+            padding: 5px;
+        }
+
         select {
             background-color: blue;
             color: white;
@@ -25,39 +31,128 @@
             background-color: chocolate;
         }
 
-        div#rallyDiv {
-            margin-top: 10px;
-            margin-bottom: 10px;
+        table,
+        th,
+        td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 5px;
+            width: 40px;
+            height: 18px;
         }
     </style>
 </head>
 
 <body>
-    <select id="placeSelect" onchange="choosePlace(this)">
-        <option>Velg sted</option>
-        <option>Arabia</option>
-        <option>Beograd</option>
-        <option>Constantinopel</option>
-    </select>
+    <div>
+        <div>
+            <select id="placeSelect" onchange="choosePlace(this)">
+                <option>Velg sted</option>
+                <option>Arabia</option>
+                <option>Beograd</option>
+                <option>Constantinopel</option>
+            </select>
 
-    <label><input type="radio" name="typetog" value="korstog" onchange="chooseTrain(this)">Korstog</label>
-    <label><input type="radio" name="typetog" value="felttog" onchange="chooseTrain(this)">Felttog</label>
+            <label><input type="radio" name="typetog" value="korstog" onchange="chooseTrain(this)">Korstog</label>
+            <label><input type="radio" name="typetog" value="felttog" onchange="chooseTrain(this)">Felttog</label>
+        </div>
 
 
-    <div id="rallyDiv">
-        <p onclick="customRallyInput(this)" id="rallyP"></p>
+        <div id="rallyDiv" onclick="customRallyInput(this)">
+
+        </div>
     </div>
 
+    <div>
+        <button onclick="showSomething()">Skjul noe</button>
+        <div id="noe" style="display: block;">
+            Her er det masss tekst.
+        </div>
+    </div>
 
+    <div>
+        <table>
+            <tr>
+                <th></th>
+                <td onclick="changeValue(this)">P1</td>
+            </tr>
+            <tr>
+                <th>Enere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Toere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Treere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Firere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Femmere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Seksere</th>
+                <td onclick="changeValue(this)"></td>
+            </tr>
+            <tr>
+                <th>Sum</th>
+                <td id="sum"></td>
+            </tr>
+            <tr>
+                <th>Bonus</th>
+                <td id="bonus"></td>
+            </tr>
+            <tr>
+                <th>Sum</th>
+                <td id="totalsum"></td>
+            </tr>
+        </table>
+    </div>
 
     <script>
         var train = '';
         var place = '';
         var rally = 'Velg sted og togtype.';
         var customRally = false;
-        rallyDiv = document.getElementById('rallyDiv');
+        var rallyDiv = document.getElementById('rallyDiv');
+        var selectedTds = [];
+        var yatzy = [
+            {
+                "ones": 0,
+                "twos": 0,
+            }
+        ];
 
         show();
+
+        function changeValue(element) {
+            if (!selectedTds.includes(element)) {
+                selectedTds.push(element);
+                let elementValue = element.innerHTML;
+                element.style.padding = "0";
+                element.innerHTML = `<input type="text" value="${elementValue}" onkeydown="if (event.code === 'Enter') submitChangeValue(this);" autofocus="autofocus" style="width:40px; height:100%; border:0; padding:5px; background-color:yellow;">`
+            }
+        }
+
+        function submitChangeValue(element) {
+            for (let i = 0; i < selectedTds.length; i++) {
+                if (selectedTds[i] === element.parentNode) {
+                    selectedTds.splice(i);
+                }
+            }
+            element.parentNode.style.padding = "5px";
+            element.parentNode.innerHTML = element.value;
+        }
 
         function choosePlace(element) {
             place = element.value;
@@ -81,12 +176,12 @@
                     rally = `Et ${train} til ${place}. ${rally}!`;
                 }
             }
-            rallyDiv.innerHTML = `<p onclick="customRallyInput(this)" id="rallyDiv">${rally}</p>`;
+            rallyDiv.innerHTML = `${rally}`;
         }
 
         function customRallyInput() {
-            rallyDiv.innerHTML = 
-                    `<input type="text" value="${rally}" onkeydown="if (event.code === \'Enter\') submitCustomRally(this);" autofocus="autofocus">
+            rallyDiv.innerHTML =
+                `<input type="text" value="${rally}" onkeydown="if (event.code === \'Enter\') submitCustomRally(this);" autofocus="autofocus">
                     <button onclick="show()">Angre</button>`;
         }
 
@@ -96,8 +191,15 @@
             show();
         }
 
-        function undoCustomRally() {
-            
+        function showSomething() {
+            let noe = document.getElementById('noe');
+
+            if (noe.style.display != "block") {
+                noe.style.display = "block";
+            } else {
+                noe.style.display = "none";
+            }
+
         }
     </script>
 </body>
