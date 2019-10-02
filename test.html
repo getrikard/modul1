@@ -6,10 +6,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            margin: 10px;
+            border: 1px solid red;
+            box-shadow: 6px 4px lightcoral;
+        }
+
         div {
-            margin: 10px auto;
-            border: 1px solid grey;
-            padding: 5px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid black;
+            box-shadow: 6px 4px grey;
+            max-width: 500px;
         }
 
         select {
@@ -135,6 +143,10 @@
 
         show();
 
+        let a = ['Per', 'Pål', 'Eskil'];
+        let b = a.map(name => name + '+');
+        console.log(b);
+
         function changeValue(element) {
             if (!selectedTds.includes(element)) {
                 selectedTds.push(element);
@@ -199,7 +211,6 @@
             } else {
                 noe.style.display = "none";
             }
-
         }
     </script>
 </body>
