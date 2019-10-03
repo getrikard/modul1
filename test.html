@@ -9,14 +9,15 @@
         body {
             margin: 10px;
             border: 1px solid red;
-            box-shadow: 6px 4px lightcoral;
+            box-shadow: 5px 5px lightcoral;
+            text-shadow: 1px 1px peru;
         }
 
         div {
             margin: 20px auto;
             padding: 10px;
             border: 1px solid black;
-            box-shadow: 6px 4px grey;
+            box-shadow: 5px 5px grey;
             max-width: 500px;
         }
 
@@ -146,6 +147,10 @@
         let a = ['Per', 'Pål', 'Eskil'];
         let b = a.map(name => name + '+');
         console.log(b);
+
+        let c = [25, 35, 45, 55];
+        let d = c.reduce((total, value) => total + value);
+        console.log(d);
 
         function changeValue(element) {
             if (!selectedTds.includes(element)) {
