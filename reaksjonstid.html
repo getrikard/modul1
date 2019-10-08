@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .lamp {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: grey;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .lightOn {
+            background-color: yellow;
+        }
+
+        .game-area {
+            user-select: none;
+        }
+
+        table {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="time-text">Trykk på den gule</h1>
+    <div id="game-area"></div>
+    <table>
+        <tr>
+            <td>Denne gangen:</td>
+            <td id="time-time"></td>
+        </tr>
+        <tr>
+            <td>Bestetid:</td>
+            <td id="best-time"></td>
+        </tr>
+        <tr>
+            <td>Gjennomsnittstid:</td>
+            <td id="avg-time"></td>
+        </tr>
+    </table>
+
+    <script>
+        let gameArea = document.getElementById('game-area');
+        let timeTimeTd = document.getElementById('time-time');
+        let bestTimeTd = document.getElementById('best-time');
+        let avgTimeTd = document.getElementById('avg-time');
+        let startTime, finishTime, bestTime;
+        let avgTime, totalTime = 0.0;
+        let correctClicks = 0;
+        buildLamps();
+        turnOnRandom();
+
+        function turnOnRandom() {
+            var elementsList = document.getElementsByClassName("lamp");
+            var randomIndex = Math.floor(Math.random() * elementsList.length);
+            var selectedElement = elementsList[randomIndex];
+            selectedElement.classList.add('lightOn')
+            startTime = new Date().getTime();
+        }
+
+        function lampClick(lamp) {
+            if (!lamp.classList.contains('lightOn')) {
+                return;
+            }
+            lamp.classList.toggle('lightOn');
+            finishTime = new Date().getTime();
+            correctClicks++;
+            var spentMilliseconds = Math.floor(finishTime - startTime);
+            var spentSeconds = spentMilliseconds / 1000;
+            totalTime += spentSeconds;
+            if (bestTime > spentSeconds || bestTime === undefined) {
+                bestTime = spentSeconds;
+            }
+            avgTime = totalTime / correctClicks;
+            timeTimeTd.innerHTML = spentSeconds + "s";
+            bestTimeTd.innerHTML = bestTime + "s";
+            avgTimeTd.innerHTML = avgTime.toFixed(3) + "s";
+            //timeText.innerHTML = `${spentSeconds}s, bestetid: ${bestTime}s, avg: ${avgTime.toFixed(3)}s`;
+            turnOnRandom();
+        }
+
+        function buildLamps() {
+            for (let i = 1; i <= 25; i++) {
+                gameArea.innerHTML += `<div onclick="lampClick(this)" class="lamp"></div>`
+                if (i % 5 === 0) {
+                    gameArea.innerHTML += `<br>`;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
