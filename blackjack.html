@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            background-color: red;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .card {
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 150px;
+            height: 200px;
+            cursor: pointer;
+        }
+
+        .card .right {}
+    </style>
+</head>
+
+<body>
+    <h1>🎲 Blackjack <span style="color: blue;">⛁⛂</span></h1>
+    <svg id="playing-table" width="100%" height="800px" style="background-color: green;"></svg>
+
+    <script>
+        let playingTable = document.getElementById('playing-table');
+        let dealerPos = { x: 300, y: 20 };
+        let playerPos = { x: 300, y: 500 };
+
+        //dealCardsToPlayer();
+
+        function dealCardsToPlayer() {
+            let cardPos = playerPos;
+            for (let i = 0; i < 3; i++) {
+                playingTable.innerHTML += createCard(cardPos, "K");
+                cardPos.x += 40;
+            }
+        }
+
+        function dealCard() {
+
+        }
+
+        function createCard(pos, text) {
+            return `<g>
+                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"></rect>
+                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${text}</text>
+                    </g>`;
+        }
+    </script>
+</body>
+
+</html>
