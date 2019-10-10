@@ -18,27 +18,33 @@
             padding: 10px;
         }
 
+        #playing-table {
+            width: 100%;
+            height: 800px;
+        }
+
         .card {
             border: 1px solid black;
             border-radius: 10px;
-            width: 150px;
-            height: 200px;
             cursor: pointer;
+
         }
     </style>
 </head>
 
 <body>
     <h1>🎲 Blackjack <span style="color: blue;">⛁⛂</span></h1>
-    <svg id="playing-table" width="100%" height="800px" style="background-color: green;"></svg>
+    <svg id="playing-table" style="background-color: green;"></svg>
 
     <script>
         let playingTable = document.getElementById('playing-table');
+        let cardHeight = 200;
+        let cardWidth = 150;
         let dealerPos = { x: 300, y: 20 };
         let playerPos = { x: 300, y: 500 };
 
-
         //dealCardsToPlayer();
+        calcBaseDealerPos()
 
         function dealCardsToPlayer() {
             let cardPos = playerPos;
@@ -48,14 +54,28 @@
             }
         }
 
-        function dealCard() {
-
+        function dealCard(pos, size, type) {
+            playingTable.innerHTML += createCard(pos, size, type);
         }
 
-        function createCard(pos, text) {
+        function calcBaseDealerPos() {
+            let game_w = playingTable.clientWidth;
+            let game_h = playingTable.clientHeight;
+            cardAreaHeight = game_h / 3;
+            cardHeight = cardAreaHeight * 0.9;
+            cardWidth = cardHeight * 0.62;
+            let y = (cardAreaHeight - cardHeight) / 2;
+            let x = (game_w / 2) - (cardWidth / 2);
+            playingTable.innerHTML += `<line x1="0" y1="${cardAreaHeight}" x2="2000" y2="${cardAreaHeight}" stroke="white" stroke-width="1">`;
+            playingTable.innerHTML += `<line x1="0" y1="${cardAreaHeight * 2}" x2="2000" y2="${cardAreaHeight * 2}" stroke="white" stroke-width="1">`;
+            dealCard({ x, y }, { w: cardWidth, h: cardHeight }, "K");
+        }
+
+        function createCard(pos, size, type) {
             return `<g>
-                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"></rect>
-                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${text}</text>
+                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
+                                style="width:${size.w}; height:${size.h}"></rect>
+                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${type}</text>
                     </g>`;
         }
     </script>
