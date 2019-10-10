@@ -147,7 +147,7 @@
                             <td><input id="editPerson${i}" type="text" value="${task.person}"></td>
                             <td><input id="editDeadline${i}" type="date" value="${task.deadline.toISOString().substr(0, 10)}"></td>
                             <td></td>
-                            <td>${task.doneDate.toLocaleDateString()}</td>
+                            <td>${doneDate}</td>
                             <td>
                                 <button onclick="updateTask(${i})">Lagre</button>
                                 <button onclick="cancelUpdateTask(${i})">Avbryt</button>
