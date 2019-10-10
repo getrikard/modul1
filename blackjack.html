@@ -42,6 +42,10 @@
         let cardWidth = 150;
         let dealerPos = { x: 300, y: 20 };
         let playerPos = { x: 300, y: 500 };
+        let playerHand = [
+            { value: 10 }, // Eksempler
+            { value: 11 }
+        ];
 
         //dealCardsToPlayer();
         calcBaseDealerPos()
@@ -54,8 +58,8 @@
             }
         }
 
-        function dealCard(pos, size, type) {
-            playingTable.innerHTML += createCard(pos, size, type);
+        function dealCard(pos, size, value) {
+            playingTable.innerHTML += createCard(pos, size, value);
         }
 
         function calcBaseDealerPos() {
@@ -71,11 +75,15 @@
             dealCard({ x, y }, { w: cardWidth, h: cardHeight }, "K");
         }
 
-        function createCard(pos, size, type) {
+        function hit() { }
+
+        function fold() { }
+
+        function createCard(pos, size, value) {
             return `<g>
                         <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
                                 style="width:${size.w}; height:${size.h}"></rect>
-                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${type}</text>
+                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
                     </g>`;
         }
     </script>
