@@ -2,12 +2,13 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Blackjack, baby!</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             margin: 0;
+            font-family: Helvetica, Arial, sans-serif;
         }
 
         h1 {
@@ -27,7 +28,6 @@
             border: 1px solid black;
             border-radius: 10px;
             cursor: pointer;
-
         }
     </style>
 </head>
@@ -42,20 +42,35 @@
         let cardWidth = 150;
         let dealerPos = { x: 300, y: 20 };
         let playerPos = { x: 300, y: 500 };
+
         let playerHand = [
             { value: 10 }, // Eksempler
             { value: 11 }
         ];
+        let dealerHand = [];
+
+        let deck = buildDeck();
+        deck = shuffle(deck);
+        console.log(deck);
 
         //dealCardsToPlayer();
         calcBaseDealerPos()
 
+        function draw() {
+
+        }
+
         function dealCardsToPlayer() {
+
             let cardPos = playerPos;
             for (let i = 0; i < 3; i++) {
                 playingTable.innerHTML += createCard(cardPos, "K");
                 cardPos.x += 40;
             }
+        }
+
+        function deal() {
+            playerHand += drawFromDeck();
         }
 
         function dealCard(pos, size, value) {
@@ -79,12 +94,50 @@
 
         function fold() { }
 
+        // Fisher-Yates shuffle
+        function shuffle(array) {
+            let m = array.length, t, i;
+            // While there remain elements to shuffle...
+            while (m) {
+                // Pick a remaining element...
+                i = Math.floor(Math.random() * m--);
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+            return array;
+        }
+
+        function buildDeck() {
+            let deck = [];
+            for (let i of range(0, 2)) { // Number of decks to use (traditionally between 1 and 8).
+                for (sort of ['♠', '♣', '♥', '♦']) {
+                    for (let value of range(2, 11)) {
+                        deck.push({ sort, value: value.toString() });
+                    }
+                    for (let value of ['J', 'Q', 'K', 'A']) {
+                        deck.push({ sort, value });
+                    }
+                }
+            }
+            return deck;
+        }
+
         function createCard(pos, size, value) {
             return `<g>
                         <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
                                 style="width:${size.w}; height:${size.h}"></rect>
                         <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
                     </g>`;
+        }
+
+        function range(n, m) {
+            array = [];
+            for (let i = n; i < m; i++) {
+                array.push(i);
+            }
+            return array;
         }
     </script>
 </body>
