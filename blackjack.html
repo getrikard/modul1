@@ -43,10 +43,7 @@
         let dealerPos = { x: 300, y: 20 };
         let playerPos = { x: 300, y: 500 };
 
-        let playerHand = [
-            { value: 10 }, // Eksempler
-            { value: 11 }
-        ];
+        let playerHand = [];
         let dealerHand = [];
 
         let deck = buildDeck();
@@ -94,19 +91,12 @@
 
         function fold() { }
 
-        // Fisher-Yates shuffle
-        function shuffle(array) {
-            let m = array.length, t, i;
-            // While there remain elements to shuffle...
-            while (m) {
-                // Pick a remaining element...
-                i = Math.floor(Math.random() * m--);
-                // And swap it with the current element.
-                t = array[m];
-                array[m] = array[i];
-                array[i] = t;
-            }
-            return array;
+        function createCard(pos, size, value) {
+            return `<g>
+                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
+                                style="width:${size.w}; height:${size.h};"></rect>
+                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
+                    </g>`;
         }
 
         function buildDeck() {
@@ -124,12 +114,19 @@
             return deck;
         }
 
-        function createCard(pos, size, value) {
-            return `<g>
-                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
-                                style="width:${size.w}; height:${size.h}"></rect>
-                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
-                    </g>`;
+        // Fisher-Yates shuffle
+        function shuffle(array) {
+            let m = array.length, t, i;
+            // While there remain elements to shuffle...
+            while (m) {
+                // Pick a remaining element...
+                i = Math.floor(Math.random() * m--);
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+            return array;
         }
 
         function range(n, m) {
