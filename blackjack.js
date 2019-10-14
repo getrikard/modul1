@@ -12,7 +12,7 @@ deck = shuffle(deck);
 console.log(deck);
 
 //dealCardsToPlayer();
-calcBaseDealerPos()
+calcBaseDealerPos();
 
 function draw() {
 
