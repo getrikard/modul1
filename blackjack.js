@@ -1,3 +1,5 @@
+const decksUsed = 2;
+
 let playingTable = document.getElementById('playing-table');
 let cardHeight = 200;
 let cardWidth = 150;
@@ -7,7 +9,7 @@ let playerPos = { x: 300, y: 500 };
 let playerHand = [];
 let dealerHand = [];
 
-let deck = buildDeck();
+let deck = buildDeck(decksUsed);
 deck = shuffle(deck);
 console.log(deck);
 
@@ -54,15 +56,15 @@ function fold() { }
 
 function createCard(pos, size, value) {
     return `<g>
-                        <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
-                                style="width:${size.w}; height:${size.h};"></rect>
-                        <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
-                    </g>`;
+                <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
+                        style="width:${size.w}; height:${size.h};"></rect>
+                <text x="${pos.x + 10}" y="${pos.y + 25}" fill="black">${value}</text>
+            </g>`;
 }
 
-function buildDeck() {
+function buildDeck(n) {
     let deck = [];
-    for (let i of range(0, 2)) { // Number of decks to use (traditionally between 1 and 8).
+    for (let i of range(0, n)) {
         for (sort of ['♠', '♣', '♥', '♦']) {
             for (let value of range(2, 11)) {
                 deck.push({ sort, value: value.toString() });
@@ -73,6 +75,15 @@ function buildDeck() {
         }
     }
     return deck;
+}
+
+function buildDeckAlt(n) {
+    const cards = "🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃜🃝🃞";
+    for (let i of range(0, n)) {
+        for (card of cards) {
+            deck.push(card);
+        }
+    }
 }
 
 // Fisher-Yates shuffle
@@ -90,6 +101,7 @@ function shuffle(array) {
     return array;
 }
 
+// Range function from Python
 function range(n, m) {
     array = [];
     for (let i = n; i < m; i++) {
