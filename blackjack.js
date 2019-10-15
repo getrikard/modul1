@@ -54,7 +54,7 @@ function hit() { }
 
 function fold() { }
 
-function createCard(pos, size, value) {
+function createCa rd(pos, size, value) {
     return `<g>
                 <rect class="card" stroke="black" stroke-fill="1" fill="white" x="${pos.x}" y="${pos.y}"
                         style="width:${size.w}; height:${size.h};"></rect>
@@ -88,7 +88,8 @@ function buildDeckAlt(n) {
 
 // Fisher-Yates shuffle
 function shuffle(array) {
-    let m = array.length, t, i;
+    let t, i;
+    let m = array.length;
     // While there remain elements to shuffle...
     while (m) {
         // Pick a remaining element...
