@@ -3,7 +3,6 @@
 
 <head>
     <title></title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -83,8 +82,8 @@
         </div>
     </div>
 
-    <div>
-        <span style="font-size: 300px;">🂡🃊</span>
+    <div id="cardz" style="font-size: 100px;">
+        🂡🃊
     </div>
 
     <div>
@@ -155,6 +154,9 @@
         let c = [25, 35, 45, 55];
         let d = c.reduce((total, value) => total + value);
         console.log(d);
+
+        cardz = document.getElementById('cardz');
+        cardz.innerHTML += String.fromCharCode('🂡'.charCodeAt());
 
         function changeValue(element) {
             if (!selectedTds.includes(element)) {
