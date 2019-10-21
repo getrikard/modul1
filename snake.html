@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Snek</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #game {
+            display: block;
+            margin: auto;
+            background-color: red;
+            width: 1280px;
+            height: 720px;
+        }
+
+        .snake-box {}
+    </style>
+</head>
+
+<body>
+    <svg id="game"></svg>
+
+    <script>
+        const game = document.getElementById('game');
+        const blockSize = 100
+
+        // Model
+        let snake = [];
+
+        // View
+        function drawSnake() {
+            for (block of snake) {
+                game.innerHTML
+            }
+        }
+
+        function makeBlock(x, y, size) {
+            return `<rect x="${x}" y="${y}" width="${size}" height="${size}" fill="blue">`;
+        }
+    </script>
+</body>
+
+</html>
