@@ -7,6 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Infiniclicker</title>
     <style>
+        body {
+            background-color: #000010;
+            color: white;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
         div {
             margin: 40px;
         }
@@ -33,6 +39,15 @@
             margin-right: 5px;
             margin-bottom: 10px;
             cursor: pointer;
+            border-radius: 25%;
+            background-color: darkorange;
+            color: black;
+            border: 0;
+            user-select: none;
+        }
+
+        #upgrade-display button:disabled {
+            background-color: grey;
         }
     </style>
 </head>
@@ -73,7 +88,7 @@
         function show() {
             clicker.innerHTML = moons[moonIndex];
             pointsDisplay.innerHTML = `$${formatNumber(points)}`;
-            perClickDisplay.innerHTML = `Per klikk: ${formatNumber(pointsPerClick)}`;
+            perClickDisplay.innerHTML = `+${formatNumber(pointsPerClick)}`;
 
             upgradeDisplay.innerHTML = '';
             let price = null;
