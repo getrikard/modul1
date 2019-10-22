@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Infiniclicker</title>
+    <style>
+        div {
+            margin: 40px;
+        }
+
+        #game {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        #clicker {
+            font-size: 5em;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        #points-display {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        #upgrade-display button {
+            padding: 10px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <h1>Infiniclicker</h1>
+        <div>
+            <span id="clicker" onclick="clicke()">🌑</span>
+        </div>
+        <div id="points-display">0</div>
+        <div id="per-click-display"></div>
+        <div id="upgrade-display"></div>
+    </div>
+
+    <script>
+        let clicker = document.getElementById('clicker');
+        let pointsDisplay = document.getElementById('points-display');
+        let perClickDisplay = document.getElementById('per-click-display');
+        let upgradeDisplay = document.getElementById('upgrade-display');
+
+        // Model
+        const moons = ['🌑', '🌒', '🌓', '🌔', '🌝', '🌖', '🌗', '🌘'];
+        let moonIndex = 0;
+        let points = 0;
+        let pointsPerClick = 1;
+        let priceIncreaseRate = 2;
+        let priceIncrease = 10;
+        let unlockedUpgrades = [
+            { add: 1, price: 10 }
+        ];
+        let biggestUpgrade = unlockedUpgrades[0].add;
+        let biggestPrice = unlockedUpgrades[0].price;
+
+        show();
+
+        // View
+        function show() {
+            clicker.innerHTML = moons[moonIndex];
+            pointsDisplay.innerHTML = `$${points}`;
+            perClickDisplay.innerHTML = `Per klikk: ${pointsPerClick}`;
+
+            upgradeDisplay.innerHTML = '';
+            let price = null;
+            let disabledHtml;
+            for (const upgrade of unlockedUpgrades) {
+                if (points < upgrade.price) { disabledHtml = 'disabled'; }
+                else { buttonDisabled = ''; }
+                upgradeDisplay.innerHTML += `<button onclick="upgrade(${upgrade.add}, ${upgrade.price})" ${disabledHtml}>+${formatNumber(upgrade.add)} ($${formatNumber(upgrade.price)})</button>`;
+            }
+        }
+
+        // Controller
+        function clicke() {
+            points += pointsPerClick;
+            moonIndex = (moonIndex + 1) % moons.length;
+
+            if (points >= biggestPrice) {
+                biggestUpgrade *= 10;
+                biggestPrice = Math.pow(biggestUpgrade, priceIncreaseRate);
+                unlockedUpgrades.push({ add: biggestUpgrade, price: biggestPrice });
+            }
+            show();
+        }
+
+        function upgrade(n, price) {
+            if (points < price) {
+                return;
+            }
+            points -= price;
+            pointsPerClick += n;
+            show();
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        }
+    </script>
+</body>
+
+</html>
