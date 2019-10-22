@@ -72,8 +72,8 @@
         // View
         function show() {
             clicker.innerHTML = moons[moonIndex];
-            pointsDisplay.innerHTML = `$${points}`;
-            perClickDisplay.innerHTML = `Per klikk: ${pointsPerClick}`;
+            pointsDisplay.innerHTML = `$${formatNumber(points)}`;
+            perClickDisplay.innerHTML = `Per klikk: ${formatNumber(pointsPerClick)}`;
 
             upgradeDisplay.innerHTML = '';
             let price = null;
