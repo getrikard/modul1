@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MMO</title>
+</head>
+
+<body>
+    <div id="buttons">
+        <button onclick="doQuest(1)">Do level 1 quest</button>
+    </div>
+    <p>XP: <span id="xp-display"></span></p>
+    <p>Level: <span id="lvl-display"></span></p>
+    <!-- <p>XP needed for next level: <span id="xp-needed-display"></span></p> -->
+    <div id="xp-needed-display">
+
+    </div>
+
+    <script>
+        let xpDisplay = document.getElementById('xp-display');
+        let buttons = document.getElementById('buttons');
+        let lvlDisplay = document.getElementById('lvl-display');
+        let xpNeededDisplay = document.getElementById('xp-needed-display');
+
+        // Model
+        let quest = {
+            level: 1,
+
+        };
+        let xp = 0;
+        let level = 1;
+
+        // View
+        show();
+
+        for (let i = 1; i <= 30; i++) {
+            xpNeededDisplay.innerHTML += `${i} - ${formatNumber(getNextLvlReq(i))}<br>`;
+        }
+
+        function show() {
+            xpDisplay.innerHTML = xp;
+            lvlDisplay.innerHTML = level;
+            // xpNeededDisplay.innerHTML = getNextLvlReq(level);
+        }
+
+        // Controller
+        function doQuest(questLevel) {
+            xp += getXpForQuestLevel(questLevel);
+            if (xp >= getNextLvlReq(level + 1)) {
+                level++;
+                buttons.innerHTML += `<button onclick="doQuest(${level})">Do level ${level} quest (${getXpForQuestLevel(level)})</button>\n`;
+            }
+            show();
+        }
+
+        function getXpForQuestLevel(lvl) {
+            return Math.round(getNextLvlReq(lvl) / 10) + 1;
+            return Math.round(lvl * Math.pow(lvl, 1.1)) * 10;
+        }
+
+        function getNextLvlReq(lvl) {
+            let exponent = 1.5;
+            let baseXP = 100;
+            return Math.floor(baseXP * Math.pow(lvl, exponent));
+            // return Math.round(100 * Math.pow(1.5, lvl)) - 150;
+            return Math.round(Math.pow(1.4, lvl + 10)) - 0;
+            return Math.round((4 * Math.pow(lvl, 3)) / 5); // pokemon
+            return 500 * (Math.pow(lvl, 2)) - (500 * lvl); // dnd
+            let b = 0.6; // Leveling speed <0,1>
+            let t = 0;
+            // return Math.pow(t * (1 + b), lvl);
+            return Math.round(Math.pow(1 + b, lvl + t));
+            // return 113 * lvl - 704.71;
+            // return Math.round(lvl * Math.pow(lvl, 0.4594317) * 100);
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
+    </script>
+</body>
+
+</html>
