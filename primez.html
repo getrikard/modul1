@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Primez</title>
+</head>
+
+<body>
+    <script>
+        let tall = 100;
+        let faktor = 1;
+        let k, j;
+
+        while (faktor <= tall) {
+            k = 0;
+            if (tall % faktor == 0) {
+                j = 1;
+                while (j <= faktor) {
+                    if (faktor % j == 0) {
+                        k++;
+                    }
+                    j++;
+                }
+                if (k == 2) {
+                    console.log(faktor);
+                }
+            }
+            faktor++;
+        }
+    </script>
+</body>
+
+</html>
