@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MouseDownTableTM</title>
+    <style>
+        table,
+        th,
+        td {
+            border-collapse: collapse;
+            border: 1px solid black;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tbody id="theTable"></tbody>
+    </table>
+
+    <script>
+        let t = document.getElementById('theTable');
+
+        for (let i = 0; i < 10; i++) {
+            t.innerHTML += '<tr>';
+            for (let j = 0; j < 10; j++) {
+                t.innerHTML += '<td onmousedown="doThing(this)"></td>';
+            }
+            t.innerHTML += '</tr>';
+        }
+
+        function doThing(e) {
+            e.style.backgroundColor == 'black' ? e.style.backgroundColor = 'white' : e.style.backgroundColor = 'black';
+        }
+    </script>
+</body>
+
+</html>
