@@ -87,6 +87,10 @@
     </div>
 
     <div>
+        <div id="rr" rikard="Roy"></div>
+    </div>
+
+    <div>
         <table>
             <tr>
                 <th></th>
@@ -144,6 +148,9 @@
                 "twos": 0,
             }
         ];
+        let rr = document.getElementById('rr');
+        rr.innerHTML = rr.getAttribute('rikard');
+        rr.setAttribute('rikard', 'hello');
 
         show();
 
@@ -155,8 +162,8 @@
         let d = c.reduce((total, value) => total + value);
         console.log(d);
 
-        cardz = document.getElementById('cardz');
-        cardz.innerHTML += String.fromCharCode('🂡'.charCodeAt());
+        // cardz = document.getElementById('cardz');
+        // cardz.innerHTML += String.fromCharCode('🂡'.charCodeAt());
 
         function changeValue(element) {
             if (!selectedTds.includes(element)) {
