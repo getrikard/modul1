@@ -51,12 +51,31 @@
         </tr>
     </table>
 
+    <table>
+        <tr>
+            <td>Beskrivelse:</td>
+            <td><input id="taskDescription" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Person:</td>
+            <td><input id="taskPerson" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Frist:</td>
+            <td><input id="taskDeadline" type="date" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button onclick="addTask()">Legg til oppgave</button></td>
+        </tr>
+    </table>
+
     <script>
         let taskDescriptionInput = document.getElementById('taskDescription');
         let taskPersonInput = document.getElementById('taskPerson');
         let taskDeadlineInput = document.getElementById('taskDeadline');
         let tasksTable = document.getElementById('tasks-table');
-        
+
         // Firebase-konfigurasjon
         let firebaseConfig = {
             apiKey: "AIzaSyCF4wq59fMWsWq8D7OfaajhHbSPB0SkcWA",
@@ -75,12 +94,17 @@
         // Model
         let tasks = [];
 
-        db.collection('todolist').get().then(function (collectionSnapshot) {
-            collectionSnapshot.forEach(function (todoItem) {
-                tasks.push(todoItem.data());
-            });
-            show();
-        });
+        let todolist = db.collection('todolist');
+        // todoCollection.get().then(
+        todolist.onSnapshot(
+            function (collectionSnapshot) {
+                tasks = [];
+                collectionSnapshot.forEach(function (todoItemSnapshot) {
+                    tasks.push(todoItemSnapshot.data());
+                });
+                show();
+            }
+        );
 
         tasks.sort(function (task) { return task.description });
 
@@ -139,7 +163,7 @@
 
         //Controller
         function addTask() {
-            tasks.push({
+            todolist.add({
                 description: taskDescriptionInput.value,
                 person: taskPersonInput.value,
                 deadline: new Date(taskDeadlineInput.value),
@@ -150,10 +174,11 @@
             taskDeadlineInput.value = '';
             show();
         }
-        
+
         function changeIsDone(checkbox, index) {
             tasks[index].isDone = checkbox.checked;
             tasks[index].doneDate = new Date(Date.now());
+            todolist.doc()
             show();
         }
 
