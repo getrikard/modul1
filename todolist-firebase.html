@@ -92,7 +92,7 @@
         let db = firebase.firestore();
 
         // Model
-        let tasks = [];
+        let tasks = {};
 
         let todolist = db.collection('todolist');
         // todoCollection.get().then(
@@ -100,13 +100,13 @@
             function (collectionSnapshot) {
                 tasks = [];
                 collectionSnapshot.forEach(function (todoItemSnapshot) {
-                    tasks.push(todoItemSnapshot.data());
+                    tasks[todoItemSnapshot.id] = todoItemSnapshot.data();
                 });
                 show();
             }
         );
 
-        tasks.sort(function (task) { return task.description });
+        // tasks.sort(function (task) { return task.description });
 
         // View
         function show() {
@@ -122,40 +122,39 @@
             `;
 
             // Tegn alle radene
-            for (let i = 0; i < tasks.length; i++) {
-                html += createHtmlRow(i);
+            for (id in tasks) {
+                html += createHtmlRow(id);
             }
             tasksTable.innerHTML = html;
         }
 
-        function createHtmlRow(i) {
-            const task = tasks[i];
+        function createHtmlRow(id) {
+            const task = tasks[id];
             const checkedHtml = task.isDone ? 'checked="checked"' : '';
-            // const doneDate = task.isDone ? task.doneDate.toLocaleDateString() : '';
             const doneDate = task.isDone ? new Date(task.doneDate.seconds * 1000).toLocaleDateString() : '';
             if (!task.editMode) return `
                 <tr>
                     <td>${task.description}</td>
                     <td>${task.person}</td>
                     <td>${new Date(task.deadline.seconds * 1000).toLocaleDateString()}</td>
-                    <td><input onchange="changeIsDone(this, ${i})" type="checkbox" ${checkedHtml} /></td>
+                    <td><input onchange="changeIsDone(this, '${id}')" type="checkbox" ${checkedHtml} /></td>
                     <td>${doneDate}</td>
                     <td>
-                        <button onclick="deleteTask(${i})">Slett</button>
-                        <button onclick="editTask(${i})">Rediger</button>
+                        <button onclick="deleteTask('${id}')">Slett</button>
+                        <button onclick="editTask('${id}')">Rediger</button>
                     </td>
                 </tr>
             `;
             return `
                 <tr>
-                    <td><input id="editDescription${i}" type="text" value="${task.description}"/></td>
-                    <td><input id="editPerson${i}" type="text" value="${task.person}"></td>
-                    <td><input id="editDeadline${i}" type="date" value="${task.deadline.toISOString().substr(0, 10)}"></td>
+                    <td><input id="editDescription${id}" type="text" value="${task.description}"/></td>
+                    <td><input id="editPerson${id}" type="text" value="${task.person}"></td>
+                    <td><input id="editDeadline${id}" type="date" value="${task.deadline.toISOString().substr(0, 10)}"></td>
                     <td></td>
                     <td>${doneDate}</td>
                     <td>
-                        <button onclick="updateTask(${i})">Lagre</button>
-                        <button onclick="cancelUpdateTask(${i})">Avbryt</button>
+                        <button onclick="updateTask('${id}')">Lagre</button>
+                        <button onclick="cancelUpdateTask('${id}')">Avbryt</button>
                     </td>
                 </tr>
             `;
@@ -172,14 +171,15 @@
             taskDescriptionInput.value = '';
             taskPersonInput.value = '';
             taskDeadlineInput.value = '';
-            show();
         }
 
-        function changeIsDone(checkbox, index) {
-            tasks[index].isDone = checkbox.checked;
-            tasks[index].doneDate = new Date(Date.now());
-            todolist.doc()
-            show();
+        function changeIsDone(checkbox, id) {
+            // tasks[index].isDone = checkbox.checked;
+            // tasks[index].doneDate = new Date(Date.now());
+            let item = tasks[id];
+            item.isDone = checkbox.checked;
+            item.doneDate = new Date(Date.now());
+            todolist.doc(id).set(item);
         }
 
         function deleteTask(index) {
