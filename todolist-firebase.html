@@ -101,6 +101,10 @@
                 tasks = [];
                 collectionSnapshot.forEach(function (todoItemSnapshot) {
                     tasks[todoItemSnapshot.id] = todoItemSnapshot.data();
+                    tasks[todoItemSnapshot.id].deadline = new Date(tasks[todoItemSnapshot.id].deadline.seconds * 1000);
+                    if (tasks[todoItemSnapshot.id].doneDate) {
+                        tasks[todoItemSnapshot.id].doneDate = new Date(tasks[todoItemSnapshot.id].doneDate.seconds * 1000);
+                    }
                 });
                 show();
             }
@@ -131,12 +135,12 @@
         function createHtmlRow(id) {
             const task = tasks[id];
             const checkedHtml = task.isDone ? 'checked="checked"' : '';
-            const doneDate = task.isDone ? new Date(task.doneDate.seconds * 1000).toLocaleDateString() : '';
+            const doneDate = task.isDone ? task.doneDate.toLocaleDateString() : '';
             if (!task.editMode) return `
                 <tr>
                     <td>${task.description}</td>
                     <td>${task.person}</td>
-                    <td>${new Date(task.deadline.seconds * 1000).toLocaleDateString()}</td>
+                    <td>${task.deadline.toLocaleDateString()}</td>
                     <td><input onchange="changeIsDone(this, '${id}')" type="checkbox" ${checkedHtml} /></td>
                     <td>${doneDate}</td>
                     <td>
@@ -162,6 +166,9 @@
 
         //Controller
         function addTask() {
+            if (taskDescriptionInput.value === '' || taskPersonInput.value === '' || taskDeadlineInput.value === '') {
+                return;
+            }
             todolist.add({
                 description: taskDescriptionInput.value,
                 person: taskPersonInput.value,
@@ -174,37 +181,38 @@
         }
 
         function changeIsDone(checkbox, id) {
-            let item = tasks[id];
-            item.isDone = checkbox.checked;
-            item.doneDate = new Date(Date.now());
-            todolist.doc(id).set(item);
+            todolist.doc(id).set({
+                isDone: checkbox.checked,
+                doneDate: new Date(Date.now())
+            }, { merge: true });
         }
 
         function deleteTask(id) {
             todolist.doc(id).delete();
         }
 
-        function editTask(index) {
-            tasks[index].editMode = true;
+        function editTask(id) {
+            tasks[id].editMode = true;
             show();
         }
 
-        function updateTask(index) {
-            const descriptionInput = document.getElementById(`editDescription${index}`);
-            const personInput = document.getElementById(`editPerson${index}`);
-            const deadlineInput = document.getElementById(`editDeadline${index}`);
-
-            const task = tasks[index];
-            task.description = descriptionInput.value;
-            task.person = personInput.value;
-            task.deadline = new Date(deadlineInput.value);
-            task.editMode = false;
+        function cancelUpdateTask(id) {
+            tasks[id].editMode = false;
             show();
         }
 
-        function cancelUpdateTask(index) {
-            tasks[index].editMode = false;
-            show();
+        function updateTask(id) {
+            const descriptionInput = document.getElementById(`editDescription${id}`);
+            const personInput = document.getElementById(`editPerson${id}`);
+            const deadlineInput = document.getElementById(`editDeadline${id}`);
+
+            todolist.doc(id).set({
+                description: descriptionInput.value,
+                person: personInput.value,
+                deadline: new Date(deadlineInput.value)
+            }, { merge: true });
+
+            tasks[id].editMode = false;
         }
     </script>
 </body>
