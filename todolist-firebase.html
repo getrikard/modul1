@@ -98,7 +98,7 @@
         // todoCollection.get().then(
         todolist.onSnapshot(
             function (collectionSnapshot) {
-                tasks = [];
+                tasks = {};
                 collectionSnapshot.forEach(function (todoItemSnapshot) {
                     tasks[todoItemSnapshot.id] = todoItemSnapshot.data();
                     tasks[todoItemSnapshot.id].deadline = new Date(tasks[todoItemSnapshot.id].deadline.seconds * 1000);
