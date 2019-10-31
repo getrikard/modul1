@@ -5,11 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GET Finn</title>
+    <title>GETchan</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            width: 600px;
+            max-width: 95%;
+            margin: auto;
+            color: black;
+            font-family: Helvetica, sans-serif;
+            background: #ff7f50;
+            background: linear-gradient(180deg, #ff7f50 0%, #ffff2a 100%) fixed;
+        }
+
+        .post {
+            background: linear-gradient(0deg, #ff7f50 0%, #ffff2a 100%) fixed;
+            padding: 10px;
+            margin: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgb(255, 107, 54);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            margin: auto;
+            border: 0px solid white;
+            border-radius: 10px;
+        }
+
+        #errorMsg {
+            background-color: red;
+            color: white;
+        }
+
+        #submitDiv {
+            text-align: right;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td:first-child {
+            width: 100px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
 </head>
 
 <body>
     <h1>/get/</h1>
+    <div id="submitDiv" class="post">
+        <table>
+            <tr>
+                <td>Navn:</td>
+                <td><input type="text" id="postNameInput"></td>
+            </tr>
+            <tr>
+                <td>Url til bilde:</td>
+                <td><input type="text" id="postUrlInput"></td>
+            </tr>
+            <tr>
+                <td>Tekst:</td>
+                <td><input type="text" id="postTextInput"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button onclick="submitPost()">Send inn!</button><span id="errorMsg"></span></td>
+            </tr>
+        </table>
+    </div>
+    <div id="post-list">⏳</div>
+
+    <script src="messageboard.js"></script>
 </body>
 
 </html>
