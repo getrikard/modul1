@@ -27,7 +27,7 @@ function createPostHTML(post) {
     let postHTML = '<div class="post">';
     postHTML += post.text ? `<p>${post.text}</p>` : '';
     postHTML += post.url ? `<img src="${post.url}">` : '';
-    postHTML += `<p>Lots of love, ${post.name}</p>`;
+    postHTML += `<p class="nameText">Lots of love, ${post.name}.</p>`;
     postHTML += `</div>`;
     return postHTML;
 }
