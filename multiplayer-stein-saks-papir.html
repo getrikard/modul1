@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GET-SSP Online</title>
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+        }
+
+        div {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table,
+        th,
+        td {
+            /* border: 1px solid black; */
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 5px;
+            /* width: 50%; */
+            text-align: center;
+        }
+
+        th {
+            background-color: darkblue;
+            color: white;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #cccccc;
+        }
+
+        tr:hover {
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        #login {
+            text-align: center;
+        }
+
+        #login input {
+            font-size: 1.5em;
+        }
+
+        .openGame {
+            color: green;
+        }
+
+        .closedGame {
+            color: red;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-firestore.js"></script>
+</head>
+
+<body>
+    <!-- <div>
+        <button onclick="changeScreen('login')">Vis login</button>
+        <button onclick="changeScreen('lobby')">Vis lobby</button>
+    </div> -->
+
+    <h1>GET Stein-Saks-Papir Online</h1>
+
+    <div id="login" class="screen">
+        <div>
+            Velg brukernavn:<br>
+            <input type="text" id="login-username" onkeydown="if (event.code === 'Enter') login()">
+        </div>
+        <div>
+            <button onclick="login()">Logg inn!</button>
+        </div>
+    </div>
+
+    <div id="lobby" class="screen">
+        <h2>Lobby</h2>
+        <div>
+            <span style="position: absolute; right: 30px;">
+                Ditt brukernavn:
+                <span id="username-display"></span>
+            </span>
+            <button>Lag nytt spill</button></div>
+        <div>
+            <table id="game-table"></table>
+        </div>
+    </div>
+
+    <script src="multiplayer-stein-saks-papir.js"></script>
+</body>
+
+</html>
