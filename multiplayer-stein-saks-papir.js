@@ -6,10 +6,11 @@ let gamesTable = document.getElementById('game-table');
 const screens = document.getElementsByClassName('screen');
 let currectScreen = document.getElementById('login');
 let username;
-let db = getFirestoreDb();
 let games;
 
-db.collection('games').orderBy('host', 'desc').onSnapshot(updateGames);
+let db = getFirestoreDb();
+let gameCollection = db.collection('games');
+gameCollection.orderBy('host', 'desc').onSnapshot(updateGames);
 
 changeScreen('lobby');
 
@@ -35,7 +36,9 @@ function showGames() {
 }
 
 function createGameListItem(game) {
-    const status = game.open ? '<span class="openGame">Åpen</span>' : '<span class="closedGame">Stengt</span>';
+    const status = game.open ?
+        '<span class="openGame">Åpen</span>' :
+        '<span class="closedGame">Stengt</span>';
     const guest = game.guest ? game.guest : '';
     let html = '';
     // html += `<td>${id}</td>`;
@@ -56,6 +59,17 @@ function login() {
     if (value == '') return;
     username = value;
     changeScreen('lobby');
+}
+
+function createGame() {
+    gameCollection.add({
+        host: username,
+        open: true
+    }).then(function () {
+        show();
+    }).catch(function (error) {
+        alert("Kunne ikke lage spill.");
+    });
 }
 
 function joinGame(id) {
