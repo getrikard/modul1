@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table, tr, td {
+            border: 1px solid gray;
+        }
+
+        td {
+            width: 20px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <input id="sizeInput" type="range" min="3" max="20" oninput="changeSize(this.value)" />
+    <div id="board"></div>
+    <script>
+        // model
+        let size;
+        let cells = [];
+
+        // view
+        show();
+        function show() {
+            document.getElementById('sizeInput').value = size;
+            let tableHtml = '';
+            for (let cellIndex = 0; cellIndex < size * size; cellIndex++) {
+                const firstInRow = cellIndex % size == 0;
+                const indexOfFirstCell = 0;
+                const indexOfLastCell = size * size - 1;
+                if (firstInRow && cellIndex > indexOfFirstCell) tableHtml += '</tr>';
+                if (firstInRow && cellIndex < indexOfLastCell) tableHtml += '<tr>';
+                let obj = cells[cellIndex];
+                tableHtml += `
+                    <td>
+                        <span onclick="markCell(${cellIndex},'c')">c=${obj.clicks}</span>
+                        <span onmouseover="markCell(${cellIndex},'m')">m=${obj.mouseOvers}</span>
+                    </td>`;
+            }
+            document.getElementById('board').innerHTML = `
+                                <table>
+                                    ${tableHtml}
+                                </table>
+                                `;
+        }
+
+        // controller
+        changeSize(3);
+
+        function changeSize(newSize) {
+            size = newSize;
+            for (let i = 0; i < size * size; i++) {
+                //cells[i] = { mouseOvers: 0, clicks: 0 };
+                let obj = {};
+                obj.mouseOvers = 0;
+                obj.clicks = 0;
+                cells[i] = obj;
+            }
+            show();
+        }
+
+        function markCell(cellIndex, event) {
+            let obj = cells[cellIndex];
+            if (event == 'c') {
+                obj.clicks++;
+            } else if (event == 'm') {
+                obj.mouseOvers++;
+            }
+            show();
+        }
+
+    </script>
+</body>
+</html>
