@@ -1,78 +1,91 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <title></title>
     <style>
-        table, tr, td {
+        table,
+        tr,
+        td {
+            border-collapse: collapse;
+        }
+
+        table {
             border: 1px solid gray;
         }
 
         td {
             width: 20px;
             user-select: none;
+            background-color: rgb(0, 0, 0);
         }
     </style>
 </head>
+
 <body>
-    <input id="sizeInput" type="range" min="3" max="20" oninput="changeSize(this.value)" />
-    <div id="board"></div>
+    <input id="sizeInput" type="range" min="3" max="30" value=3" oninput="changeSize()" />
+    <table id="board"></table>
     <script>
+        // Hjelpevariabler
+        const board = document.getElementById('board');
+        const sizeInput = document.getElementById('sizeInput');
+
         // model
         let size;
         let cells = [];
+        let maxValue = 0;
+        let lastCellChanged = {};
+
+        // Init
+        changeSize(3);
+        show();
 
         // view
-        show();
         function show() {
-            document.getElementById('sizeInput').value = size;
+            sizeInput.value = size;
             let tableHtml = '';
-            for (let cellIndex = 0; cellIndex < size * size; cellIndex++) {
-                const firstInRow = cellIndex % size == 0;
-                const indexOfFirstCell = 0;
-                const indexOfLastCell = size * size - 1;
-                if (firstInRow && cellIndex > indexOfFirstCell) tableHtml += '</tr>';
-                if (firstInRow && cellIndex < indexOfLastCell) tableHtml += '<tr>';
-                let obj = cells[cellIndex];
-                tableHtml += `
-                    <td>
-                        <span onclick="markCell(${cellIndex},'c')">c=${obj.clicks}</span>
-                        <span onmouseover="markCell(${cellIndex},'m')">m=${obj.mouseOvers}</span>
-                    </td>`;
+            for (let i = 0; i < size; i++) {
+                tableHtml += '<tr>';
+                for (let j = 0; j < size; j++) {
+                    let blackness = 255;
+                    if (Array.isArray(cells[i]) && cells[i][j] != undefined && cells[i][j] != NaN) {
+                        // console.log(`cells[${i}][${j}]`, cells[i][j]);
+                        blackness = calcBlackness(cells[i][j]);
+                    }
+                    tableHtml += `<td onmouseenter="markCell({x:${i}, y:${j}})" style="background-color:rgb(${blackness},${blackness},${blackness})">&nbsp</td>`;
+                }
+                tableHtml += '</tr>';
             }
-            document.getElementById('board').innerHTML = `
-                                <table>
-                                    ${tableHtml}
-                                </table>
-                                `;
+            board.innerHTML = tableHtml;
         }
 
         // controller
-        changeSize(3);
-
-        function changeSize(newSize) {
-            size = newSize;
-            for (let i = 0; i < size * size; i++) {
-                //cells[i] = { mouseOvers: 0, clicks: 0 };
-                let obj = {};
-                obj.mouseOvers = 0;
-                obj.clicks = 0;
-                cells[i] = obj;
-            }
+        function changeSize() {
+            size = sizeInput.value;
             show();
         }
 
-        function markCell(cellIndex, event) {
-            let obj = cells[cellIndex];
-            if (event == 'c') {
-                obj.clicks++;
-            } else if (event == 'm') {
-                obj.mouseOvers++;
-            }
+        function markCell(cell) {
+            if (lastCellChanged === cell) return;
+            const x = cell.x;
+            const y = cell.y;
+            lastCellChanged = { x, y };
+
+            if (!Array.isArray(cells[x])) cells[x] = [];
+            if (cells[x][y] === undefined) cells[x][y] = 0;
+
+            cells[x][y]++;
+            if (cells[x][y] > maxValue) maxValue = cells[x][y];
             show();
+        }
+
+        function calcBlackness(value) {
+            return 255 - Math.round(255 / maxValue * value);
         }
 
     </script>
 </body>
+
 </html>
