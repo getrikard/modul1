@@ -9,11 +9,8 @@
 
     <div id="output"></div>
 
-
     <script>
-
         let outputDiv = document.getElementById("output");
-
 
         let monsterHP = 100;
         let heroHP = 100;
@@ -26,12 +23,12 @@
 
         function drawArea() {
             let html = `
-            <div id="monsterDisplayer">Monster's HP: ${monsterHP}</div>
-            <div id="heroDisplayer">Hero's HP: ${heroHP}</div>
+                <div id="monsterDisplayer">Monster's HP: ${monsterHP}</div>
+                <div id="heroDisplayer">Hero's HP: ${heroHP}</div>
 
-            <div id="textDisplayer">${textDisplayer}</div> 
+                <div id="textDisplayer">${textDisplayer}</div> 
 
-            <button id="attackButton" onclick="heroAttack()">ATTACK!</button>
+                <button id="attackButton" onclick="heroAttack()">ATTACK!</button>
             `;
 
             outputDiv.innerHTML = html;
@@ -40,7 +37,6 @@
             let doesItBlock = Math.floor(Math.random() * 10);
             if (doesItBlock > 8) {
                 heroBlock = true;
-
             }
 
             if (heroHP > 0 && monsterBlock == false) {
@@ -49,16 +45,18 @@
                 textDisplayer = "You attacked for " + attackPower + " damage! <br>";
                 monsterBlock = false;
                 monsterAttack();
-
             }
-           if (heroHP > 0 && monsterBlock == true) {
+
+            if (heroHP > 0 && monsterBlock == true) {
                 textDisplayer += "Monster blocked your attack! <br>";
                 monsterAttack();
                 monsterBlock = false;
             }
-           if(heroHP <= 0) {
+
+            if (heroHP <= 0) {
                 textDisplayer += " THE MONSTER KILLED YOU! ";
             }
+
             drawArea();
         }
 
@@ -67,6 +65,7 @@
             if (doesItBlock > 8) {
                 monsterBlock = true;
             }
+
             if (monsterHP > 0 && heroBlock == false) {
                 attackPower = Math.floor(Math.random() * 10) + 1;
                 heroHP = heroHP - attackPower;
