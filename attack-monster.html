@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>attckMonsters</title>
+</head>
+
+<body>
+
+    <div id="output"></div>
+
+
+    <script>
+
+        let outputDiv = document.getElementById("output");
+
+
+        let monsterHP = 100;
+        let heroHP = 100;
+        let attackPower;
+        let heroBlock = false;
+        let monsterBlock = false;
+        let textDisplayer = "";
+
+        drawArea();
+
+        function drawArea() {
+            let html = `
+            <div id="monsterDisplayer">Monster's HP: ${monsterHP}</div>
+            <div id="heroDisplayer">Hero's HP: ${heroHP}</div>
+
+            <div id="textDisplayer">${textDisplayer}</div> 
+
+            <button id="attackButton" onclick="heroAttack()">ATTACK!</button>
+            `;
+
+            outputDiv.innerHTML = html;
+        }
+        function heroAttack() {
+            let doesItBlock = Math.floor(Math.random() * 10);
+            if (doesItBlock > 8) {
+                heroBlock = true;
+
+            }
+
+            if (heroHP > 0 && monsterBlock == false) {
+                attackPower = Math.floor(Math.random() * 10) + 1;
+                monsterHP = monsterHP - attackPower;
+                textDisplayer = "You attacked for " + attackPower + " damage! <br>";
+                monsterBlock = false;
+                monsterAttack();
+
+            }
+           if (heroHP > 0 && monsterBlock == true) {
+                textDisplayer += "Monster blocked your attack! <br>";
+                monsterAttack();
+                monsterBlock = false;
+            }
+           if(heroHP <= 0) {
+                textDisplayer += " THE MONSTER KILLED YOU! ";
+            }
+            drawArea();
+        }
+
+        function monsterAttack() {
+            let doesItBlock = Math.floor(Math.random() * 10);
+            if (doesItBlock > 8) {
+                monsterBlock = true;
+            }
+            if (monsterHP > 0 && heroBlock == false) {
+                attackPower = Math.floor(Math.random() * 10) + 1;
+                heroHP = heroHP - attackPower;
+                textDisplayer += "Monster attacked for " + attackPower + " damage!";
+                heroBlock = false;
+            }
+            else {
+                monsterHP = 0;
+                textDisplayer = " YOU KVERKED THE MONSTER!  ";
+            }
+            drawArea();
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
